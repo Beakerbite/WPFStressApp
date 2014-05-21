@@ -6,7 +6,33 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-	<StackPanel>
+	<Grid x:Name="ColumnStack">
+		<Grid.RowDefinitions>
+			<RowDefinition x:Name="Row1" />
+			<RowDefinition x:Name="Row2" />
+			<RowDefinition x:Name="Row3" />
+			<RowDefinition x:Name="Row4" />
+			<RowDefinition x:Name="Row5" />
+			<RowDefinition x:Name="Row6" />
+			<RowDefinition x:Name="Row7" />
+			<RowDefinition x:Name="Row8" />
+			<RowDefinition x:Name="Row9" />
+			<RowDefinition x:Name="Row10" />
+			<RowDefinition x:Name="Row11" />
+			<RowDefinition x:Name="Row12" />
+		</Grid.RowDefinitions>
 		
-	</StackPanel>
+		<Rectangle Grid.Row="0" Fill="Red" />
+		<Rectangle Grid.Row="1" Fill="Blue" />
+		<Rectangle Grid.Row="2" Fill="Green" />
+		<Rectangle Grid.Row="3" Fill="Yellow" />
+		<Rectangle Grid.Row="4" Fill="Purple" />
+		<Rectangle Grid.Row="5" Fill="Orange" />
+		<Rectangle Grid.Row="6" Fill="Violet" />
+		<Rectangle Grid.Row="7" Fill="Gray" />
+		<Rectangle Grid.Row="8" Fill="Chocolate" />
+		<Rectangle Grid.Row="9" Fill="HotPink" />
+		<Rectangle Grid.Row="10" Fill="Indigo" />
+		<Rectangle Grid.Row="11" Fill="Maroon" />
+	</Grid>
 </UserControl>

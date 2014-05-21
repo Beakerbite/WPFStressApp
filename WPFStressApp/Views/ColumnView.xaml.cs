@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WPFStressApp.Models;
 
 namespace WPFStressApp.Views
 {
@@ -23,6 +24,34 @@ namespace WPFStressApp.Views
 		public ColumnView()
 		{
 			InitializeComponent();
+			var data = Data.GetColumns().First().Heights;
+			ColumnStack.Opacity = Data.GetColumns().First().Alpha;
+			var controls = GetControls();
+
+			for (int i = 0; i < data.Count; i++ )
+			{
+				controls[i].Height = new GridLength(data[i], GridUnitType.Star);
+			}
+		}
+
+		private List<RowDefinition> GetControls()
+		{
+			var controls = new List<RowDefinition>();
+
+			controls.Add(Row1);
+			controls.Add(Row2);
+			controls.Add(Row3);
+			controls.Add(Row4);
+			controls.Add(Row5);
+			controls.Add(Row6);
+			controls.Add(Row7);
+			controls.Add(Row8);
+			controls.Add(Row9);
+			controls.Add(Row10);
+			controls.Add(Row11);
+			controls.Add(Row12);
+
+			return controls;
 		}
 	}
 }

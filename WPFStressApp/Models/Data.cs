@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFStressApp.Models
 {
-	class Data
+	public class Data
 	{
 		private static List<ColumnData> _getColumns;
 		public static List<ColumnData> GetColumns()

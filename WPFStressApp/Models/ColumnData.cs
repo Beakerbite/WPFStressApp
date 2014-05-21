@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WPFStressApp.Models
 {
-	class ColumnData
+	public class ColumnData
 	{
 		public List<double> Heights { get; set; }
 		public double Alpha;
