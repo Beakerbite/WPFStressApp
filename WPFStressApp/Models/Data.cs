@@ -19,7 +19,19 @@ namespace WPFStressApp.Models
 			set
 			{
 				_columns = value;
+				ColumnCount = _columns.Count;
 				NotifyPropertyChanged("Columns");
+			}
+		}
+
+		private int _columnCount;
+		public int ColumnCount
+		{
+			get { return _columnCount; }
+			set
+			{
+				_columnCount = value;
+				NotifyPropertyChanged("ColumnCount");
 			}
 		}
 

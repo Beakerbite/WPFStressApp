@@ -8,7 +8,7 @@
 		<!-- ItemsPanelTemplate -->
 		<ItemsControl.ItemsPanel>
 			<ItemsPanelTemplate>
-				<UniformGrid Columns="115" />
+				<UniformGrid Columns="{Binding ColumnCount}" />
 			</ItemsPanelTemplate>
 		</ItemsControl.ItemsPanel>
 
