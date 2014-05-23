@@ -3,7 +3,20 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 		xmlns:controls="clr-namespace:WPFStressApp.Views"
         Title="WPF Stress App" Height="350" Width="525">
-	<Grid>
-		<controls:ColumnView ColumnData="{Binding Column}" />
-	</Grid>
+
+	<ItemsControl ItemsSource="{Binding Columns}">
+		<!-- ItemsPanelTemplate -->
+		<ItemsControl.ItemsPanel>
+			<ItemsPanelTemplate>
+				<UniformGrid Columns="115" />
+			</ItemsPanelTemplate>
+		</ItemsControl.ItemsPanel>
+
+		<!-- ItemTemplate -->
+		<ItemsControl.ItemTemplate>
+			<DataTemplate>
+				<controls:ColumnView ColumnData="{Binding }" />
+			</DataTemplate>
+		</ItemsControl.ItemTemplate>
+	</ItemsControl>
 </Window>

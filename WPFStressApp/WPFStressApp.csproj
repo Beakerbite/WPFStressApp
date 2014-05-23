@@ -53,6 +53,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DataReader.cs" />
     <Compile Include="Models\ColumnData.cs" />
     <Compile Include="Models\Data.cs" />
     <Compile Include="Views\ColumnView.xaml.cs">

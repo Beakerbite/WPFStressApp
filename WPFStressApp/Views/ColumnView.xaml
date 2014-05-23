@@ -31,7 +31,7 @@
 		<Rectangle Grid.Row="6" Fill="Violet" />
 		<Rectangle Grid.Row="7" Fill="Gray" />
 		<Rectangle Grid.Row="8" Fill="Chocolate" />
-		<Rectangle Grid.Row="9" Fill="HotPink" />
+		<Rectangle Grid.Row="9" Fill="Aquamarine" />
 		<Rectangle Grid.Row="10" Fill="Indigo" />
 		<Rectangle Grid.Row="11" Fill="Maroon" />
 	</Grid>

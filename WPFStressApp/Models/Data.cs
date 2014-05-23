@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data;
 using System.IO;
@@ -11,20 +12,20 @@ namespace WPFStressApp.Models
 {
 	public class Data : INotifyPropertyChanged
 	{
-		private ColumnData _column;
-		public ColumnData Column
+		private ObservableCollection<ColumnData> _columns;
+		public ObservableCollection<ColumnData> Columns
 		{
-			get { return _column; }
+			get { return _columns; }
 			set
 			{
-				_column = value;
-				NotifyPropertyChanged("Column");
+				_columns = value;
+				NotifyPropertyChanged("Columns");
 			}
 		}
 
 		public Data()
 		{
-			Column = GetColumns().First();
+			Columns = new ObservableCollection<ColumnData>(DataReader.GetColumns());
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -33,83 +34,6 @@ namespace WPFStressApp.Models
 			var handler = PropertyChanged;
 			if (handler != null)
 				PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-		}
-
-		private static List<ColumnData> _getColumns;
-		public static List<ColumnData> GetColumns()
-		{
-			if (_getColumns == null)
-			{
-				var columns = new List<ColumnData>();
-				columns = ReadFromCSV();
-				_getColumns = columns;
-			}
-			return _getColumns;
-		}
-
-		private static List<ColumnData> ReadFromCSV()
-		{
-			var output = new List<ColumnData>();
-
-			try
-			{
-				var file = new FileInfo("TestData.csv");
-				var data = CsvToDataTable(file);
-				output = ProcessDataTable(data);
-			}
-			catch (Exception ex)
-			{
-				Console.WriteLine(ex.Message);
-			}
-
-			return output;
-		}
-
-		protected static List<ColumnData> ProcessDataTable(DataTable dataTable)
-		{
-			var output = new List<ColumnData>();
-
-			foreach (DataRow row in dataTable.Rows)
-			{
-				output.Add(ConvertDataRowToColumnData(row));
-			}
-
-			return output;
-		}
-
-		private static DataTable CsvToDataTable(FileInfo file)
-		{
-			DataTable dataTable = new DataTable();
-			using (var conn = new System.Data.Odbc.OdbcConnection(@"Driver={Microsoft Access Text Driver (*.txt, *.csv)};Dbq=" + file.DirectoryName + ";Extensions=asc,csv,tab,txt;Persist Security Info=False"))
-			{
-				conn.Open();
-				var adapter = new System.Data.Odbc.OdbcDataAdapter("select * from [" + file.Name + "]", conn);
-				adapter.Fill(dataTable);
-			}
-			return dataTable;
-		}
-
-		private static ColumnData ConvertDataRowToColumnData(DataRow row)
-		{
-			var column = new ColumnData();
-
-			column.Heights = new List<double>();
-
-			column.Alpha = double.Parse(row["ColumnOpacity"] + "");
-			column.Heights.Add(double.Parse(row["Box0"] + ""));
-			column.Heights.Add(double.Parse(row["Box1"] + ""));
-			column.Heights.Add(double.Parse(row["Box2"] + ""));
-			column.Heights.Add(double.Parse(row["Box3"] + ""));
-			column.Heights.Add(double.Parse(row["Box4"] + ""));
-			column.Heights.Add(double.Parse(row["Box5"] + ""));
-			column.Heights.Add(double.Parse(row["Box6"] + ""));
-			column.Heights.Add(double.Parse(row["Box7"] + ""));
-			column.Heights.Add(double.Parse(row["Box8"] + ""));
-			column.Heights.Add(double.Parse(row["Box9"] + ""));
-			column.Heights.Add(double.Parse(row["Box10"] + ""));
-			column.Heights.Add(double.Parse(row["Box11"] + ""));
-
-			return column;
 		}
 	}
 }
