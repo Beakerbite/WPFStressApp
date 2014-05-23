@@ -30,8 +30,7 @@ namespace WPFStressApp
 			try
 			{
 				var file = new FileInfo("TestData.csv");
-				var data = CsvToDataTable(file);
-				output = ProcessDataTable(data);
+				output = GetDataFromCSV(file);
 			}
 			catch (Exception ex)
 			{
@@ -41,51 +40,31 @@ namespace WPFStressApp
 			return output;
 		}
 
-		private static List<ColumnData> ProcessDataTable(DataTable dataTable)
+		private static List<ColumnData> GetDataFromCSV(FileInfo file)
 		{
 			var output = new List<ColumnData>();
 
-			foreach (DataRow row in dataTable.Rows)
+			List<string> lines = File.ReadAllLines(file.FullName).ToList();
+			lines.RemoveAt(0);
+
+			foreach (var line in lines)
 			{
-				output.Add(ConvertDataRowToColumnData(row));
+				List<string> entries = line.Split(',').ToList();
+				var colData = new ColumnData();
+				colData.Heights = new List<double>();
+
+				for (var i = 1; i < entries.Count; i++)
+				{
+					if (i == 1)
+						colData.Alpha = double.Parse(entries[i]);
+					else
+						colData.Heights.Add(double.Parse(entries[i]));
+				}
+
+				output.Add(colData);
 			}
 
 			return output;
-		}
-
-		private static DataTable CsvToDataTable(FileInfo file)
-		{
-			DataTable dataTable = new DataTable();
-			using (var conn = new System.Data.Odbc.OdbcConnection(@"Driver={Microsoft Access Text Driver (*.txt, *.csv)};Dbq=" + file.DirectoryName + ";Extensions=asc,csv,tab,txt;Persist Security Info=False"))
-			{
-				conn.Open();
-				var adapter = new System.Data.Odbc.OdbcDataAdapter("select * from [" + file.Name + "]", conn);
-				adapter.Fill(dataTable);
-			}
-			return dataTable;
-		}
-
-		private static ColumnData ConvertDataRowToColumnData(DataRow row)
-		{
-			var column = new ColumnData();
-
-			column.Heights = new List<double>();
-
-			column.Alpha = double.Parse(row["ColumnOpacity"] + "");
-			column.Heights.Add(double.Parse(row["Box0"] + ""));
-			column.Heights.Add(double.Parse(row["Box1"] + ""));
-			column.Heights.Add(double.Parse(row["Box2"] + ""));
-			column.Heights.Add(double.Parse(row["Box3"] + ""));
-			column.Heights.Add(double.Parse(row["Box4"] + ""));
-			column.Heights.Add(double.Parse(row["Box5"] + ""));
-			column.Heights.Add(double.Parse(row["Box6"] + ""));
-			column.Heights.Add(double.Parse(row["Box7"] + ""));
-			column.Heights.Add(double.Parse(row["Box8"] + ""));
-			column.Heights.Add(double.Parse(row["Box9"] + ""));
-			column.Heights.Add(double.Parse(row["Box10"] + ""));
-			column.Heights.Add(double.Parse(row["Box11"] + ""));
-
-			return column;
 		}
 	}
 }
