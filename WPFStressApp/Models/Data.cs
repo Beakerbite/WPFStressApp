@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,21 +22,9 @@ namespace WPFStressApp.Models
 			}
 		}
 
-		private String _name;
-		public String Name
-		{
-			get { return _name; }
-			set
-			{
-				_name = value;
-				NotifyPropertyChanged("Name");
-			}
-		}
-
 		public Data()
 		{
 			Column = GetColumns().First();
-			Name = "George";
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -51,32 +41,75 @@ namespace WPFStressApp.Models
 			if (_getColumns == null)
 			{
 				var columns = new List<ColumnData>();
-				columns.Add(GetData());
+				columns = ReadFromCSV();
 				_getColumns = columns;
 			}
 			return _getColumns;
 		}
 
-		private static ColumnData GetData()
+		private static List<ColumnData> ReadFromCSV()
 		{
-			var columnData = new ColumnData();
-			columnData.Alpha = 0.977;
-			columnData.Heights = new List<double>{
-				0.002,
-				0.003,
-				0.133,
-				0.186,
-				0.197,
-				0.075,
-				0.057,
-				0.008,
-				0.037,
-				0.043,
-				0.145,
-				0.115,
-			};
+			var output = new List<ColumnData>();
 
-			return columnData;
+			try
+			{
+				var file = new FileInfo("TestData.csv");
+				var data = CsvToDataTable(file);
+				output = ProcessDataTable(data);
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+			}
+
+			return output;
+		}
+
+		protected static List<ColumnData> ProcessDataTable(DataTable dataTable)
+		{
+			var output = new List<ColumnData>();
+
+			foreach (DataRow row in dataTable.Rows)
+			{
+				output.Add(ConvertDataRowToColumnData(row));
+			}
+
+			return output;
+		}
+
+		private static DataTable CsvToDataTable(FileInfo file)
+		{
+			DataTable dataTable = new DataTable();
+			using (var conn = new System.Data.Odbc.OdbcConnection(@"Driver={Microsoft Access Text Driver (*.txt, *.csv)};Dbq=" + file.DirectoryName + ";Extensions=asc,csv,tab,txt;Persist Security Info=False"))
+			{
+				conn.Open();
+				var adapter = new System.Data.Odbc.OdbcDataAdapter("select * from [" + file.Name + "]", conn);
+				adapter.Fill(dataTable);
+			}
+			return dataTable;
+		}
+
+		private static ColumnData ConvertDataRowToColumnData(DataRow row)
+		{
+			var column = new ColumnData();
+
+			column.Heights = new List<double>();
+
+			column.Alpha = double.Parse(row["ColumnOpacity"] + "");
+			column.Heights.Add(double.Parse(row["Box0"] + ""));
+			column.Heights.Add(double.Parse(row["Box1"] + ""));
+			column.Heights.Add(double.Parse(row["Box2"] + ""));
+			column.Heights.Add(double.Parse(row["Box3"] + ""));
+			column.Heights.Add(double.Parse(row["Box4"] + ""));
+			column.Heights.Add(double.Parse(row["Box5"] + ""));
+			column.Heights.Add(double.Parse(row["Box6"] + ""));
+			column.Heights.Add(double.Parse(row["Box7"] + ""));
+			column.Heights.Add(double.Parse(row["Box8"] + ""));
+			column.Heights.Add(double.Parse(row["Box9"] + ""));
+			column.Heights.Add(double.Parse(row["Box10"] + ""));
+			column.Heights.Add(double.Parse(row["Box11"] + ""));
+
+			return column;
 		}
 	}
 }
