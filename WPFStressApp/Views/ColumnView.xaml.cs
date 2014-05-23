@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -35,16 +36,45 @@ namespace WPFStressApp.Views
 			Loaded += (o, i) =>
 			{
 				ColumnStack.Opacity = ColumnData.Alpha;
-				DefineHeights(ColumnData.Heights, ColumnStack.RowDefinitions);
+				DefineHeights(ColumnData.Heights, ColumnStack);
 			};
 
 		}
 
-		private void DefineHeights(List<double> heights, RowDefinitionCollection rowDefinitions)
+		private Brush PickBrush(int brush)
 		{
-			for (int i = 0; i < heights.Count && i < rowDefinitions.Count; i++)
+			var brushes = new List<SolidColorBrush>{
+				Brushes.Red,
+				Brushes.Blue,
+				Brushes.Green,
+				Brushes.Yellow,
+				Brushes.Purple,
+				Brushes.Orange,
+				Brushes.Violet,
+				Brushes.Gray,
+				Brushes.Chocolate,
+			};
+
+			return brushes[brush % brushes.Count];
+		}
+
+		private void DefineHeights(List<double> heights, Grid grid)
+		{
+			for (int i = 0; i < heights.Count; i++)
 			{
-				rowDefinitions[i].Height = new GridLength(heights[i], GridUnitType.Star);
+				var rowDef = new RowDefinition();
+				rowDef.Height = new GridLength(heights[i], GridUnitType.Star);
+				grid.RowDefinitions.Add(rowDef);
+			}
+
+			for (int j = 0; j < heights.Count; j++)
+			{
+				var rect = new Rectangle();
+				var brush = PickBrush(j);
+				rect.Fill = brush;
+				grid.Children.Add(rect);
+				Grid.SetColumn(rect, 0);
+				Grid.SetRow(rect, j);
 			}
 		}
 	}

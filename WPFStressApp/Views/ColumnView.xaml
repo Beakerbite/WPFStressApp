@@ -7,32 +7,5 @@
              d:DesignHeight="300" d:DesignWidth="300">
 
 	<Grid x:Name="ColumnStack">
-		<Grid.RowDefinitions>
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-			<RowDefinition />
-		</Grid.RowDefinitions>
-		
-		<Rectangle Grid.Row="0" Fill="Red" />
-		<Rectangle Grid.Row="1" Fill="Blue" />
-		<Rectangle Grid.Row="2" Fill="Green" />
-		<Rectangle Grid.Row="3" Fill="Yellow" />
-		<Rectangle Grid.Row="4" Fill="Purple" />
-		<Rectangle Grid.Row="5" Fill="Orange" />
-		<Rectangle Grid.Row="6" Fill="Violet" />
-		<Rectangle Grid.Row="7" Fill="Gray" />
-		<Rectangle Grid.Row="8" Fill="Chocolate" />
-		<Rectangle Grid.Row="9" Fill="Aquamarine" />
-		<Rectangle Grid.Row="10" Fill="Indigo" />
-		<Rectangle Grid.Row="11" Fill="Maroon" />
 	</Grid>
 </UserControl>
