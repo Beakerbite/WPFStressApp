@@ -8,18 +8,18 @@
 
 	<Grid x:Name="ColumnStack">
 		<Grid.RowDefinitions>
-			<RowDefinition x:Name="Row1" />
-			<RowDefinition x:Name="Row2" />
-			<RowDefinition x:Name="Row3" />
-			<RowDefinition x:Name="Row4" />
-			<RowDefinition x:Name="Row5" />
-			<RowDefinition x:Name="Row6" />
-			<RowDefinition x:Name="Row7" />
-			<RowDefinition x:Name="Row8" />
-			<RowDefinition x:Name="Row9" />
-			<RowDefinition x:Name="Row10" />
-			<RowDefinition x:Name="Row11" />
-			<RowDefinition x:Name="Row12" />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
+			<RowDefinition />
 		</Grid.RowDefinitions>
 		
 		<Rectangle Grid.Row="0" Fill="Red" />

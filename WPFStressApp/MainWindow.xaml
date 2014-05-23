@@ -4,6 +4,6 @@
 		xmlns:controls="clr-namespace:WPFStressApp.Views"
         Title="WPF Stress App" Height="350" Width="525">
 	<Grid>
-		<controls:ColumnView />
+		<controls:ColumnView ColumnData="{Binding Column}" />
 	</Grid>
 </Window>

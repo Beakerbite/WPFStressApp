@@ -21,37 +21,31 @@ namespace WPFStressApp.Views
 	/// </summary>
 	public partial class ColumnView : UserControl
 	{
+		public static readonly DependencyProperty ColumnDataProperty = DependencyProperty.Register("ColumnData", typeof(ColumnData), typeof(ColumnView));
+		public ColumnData ColumnData
+		{
+			get { return this.GetValue(ColumnDataProperty) as ColumnData; }
+			set { this.SetValue(ColumnDataProperty, value); }
+		}
+
 		public ColumnView()
 		{
 			InitializeComponent();
-			var data = Data.GetColumns().First().Heights;
-			ColumnStack.Opacity = Data.GetColumns().First().Alpha;
-			var controls = GetControls();
 
-			for (int i = 0; i < data.Count; i++ )
+			Loaded += (o, i) =>
 			{
-				controls[i].Height = new GridLength(data[i], GridUnitType.Star);
-			}
+				ColumnStack.Opacity = ColumnData.Alpha;
+				DefineHeights(ColumnData.Heights, ColumnStack.RowDefinitions);
+			};
+
 		}
 
-		private List<RowDefinition> GetControls()
+		private void DefineHeights(List<double> heights, RowDefinitionCollection rowDefinitions)
 		{
-			var controls = new List<RowDefinition>();
-
-			controls.Add(Row1);
-			controls.Add(Row2);
-			controls.Add(Row3);
-			controls.Add(Row4);
-			controls.Add(Row5);
-			controls.Add(Row6);
-			controls.Add(Row7);
-			controls.Add(Row8);
-			controls.Add(Row9);
-			controls.Add(Row10);
-			controls.Add(Row11);
-			controls.Add(Row12);
-
-			return controls;
+			for (int i = 0; i < heights.Count && i < rowDefinitions.Count; i++)
+			{
+				rowDefinitions[i].Height = new GridLength(heights[i], GridUnitType.Star);
+			}
 		}
 	}
 }
